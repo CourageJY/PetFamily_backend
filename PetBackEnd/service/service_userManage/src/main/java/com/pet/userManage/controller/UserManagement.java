@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/userManagement")
+@RequestMapping("api/use/management")
 @RefreshScope
-@Api(value="userManagement",tags = "用户信息管理")
+@Api(value="management",tags = "用户信息管理")
 public class UserManagement {
     @Autowired
     EmailService emailService;

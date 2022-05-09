@@ -21,9 +21,9 @@ import java.lang.reflect.Method;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/user/info")
 @RefreshScope
-@Api(value="manage_user",tags = "管理用户信息")
+@Api(value="info",tags = "管理用户信息")
 public class UserInfoController {
 
     private UserService userService;

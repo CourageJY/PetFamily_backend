@@ -26,7 +26,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/helpPost")
+@RequestMapping("api/community/helpPost")
 @RefreshScope
 @Api(value="helpPost",tags = "求助帖子")
 public class HelpPostController {

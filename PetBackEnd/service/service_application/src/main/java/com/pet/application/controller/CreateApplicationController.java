@@ -43,8 +43,8 @@ public class CreateApplicationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MinIOService minIOService;
+//    @Autowired
+//    private MinIOService minIOService;
 
     private Long plusTime=28800L;//设置8个小时的秒数
 

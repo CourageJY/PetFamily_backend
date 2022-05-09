@@ -22,7 +22,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api/loginRegister/login")
 @RefreshScope
 @Api(value="login",tags = "登录")
 public class LoginController {

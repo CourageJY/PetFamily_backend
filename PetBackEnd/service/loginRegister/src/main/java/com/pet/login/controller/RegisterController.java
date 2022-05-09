@@ -23,7 +23,7 @@ import java.util.Objects;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/loginRegister/register")
 @RefreshScope
 @Api(value="register",tags = "注册")
 public class RegisterController {

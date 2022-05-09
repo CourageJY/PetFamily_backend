@@ -24,7 +24,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/reportPost")
+@RequestMapping("api/community/reportPost")
 @RefreshScope
 @Api(value="reportpost",tags = "举报内容管理")
 public class ReportPostController {

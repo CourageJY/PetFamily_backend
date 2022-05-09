@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/notice")
+@RequestMapping("api/community/notice")
 @RefreshScope
 @Api(value="notice",tags = "公告管理")
 public class NoticeController {

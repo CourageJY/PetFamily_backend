@@ -25,7 +25,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/commonPost")
+@RequestMapping("api/community/commonPost")
 @RefreshScope
 @Api(value="commonPost",tags = "普通帖子")
 public class CommonPostController {

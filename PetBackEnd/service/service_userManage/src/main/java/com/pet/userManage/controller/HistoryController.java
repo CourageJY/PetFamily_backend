@@ -26,9 +26,9 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/history")
+@RequestMapping("api/user/history")
 @RefreshScope
-@Api(value="get_history",tags = "获取所有申请表历史")
+@Api(value="history",tags = "获取所有申请表历史")
 public class HistoryController {
     private AdoptApplicationService adopt;
     private FindApplicationService find;

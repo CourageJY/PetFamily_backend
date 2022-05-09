@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({"com.pet"})
 @EntityScan("com.pet.model")
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.pet.minio.controller")
 public class minIO {
     public static void main(String[] args)

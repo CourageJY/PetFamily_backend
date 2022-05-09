@@ -36,7 +36,7 @@ public class GetApplicationController {
     @Autowired
     private ReportApplicationService reportApplicationService;
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="获取单个领养申请表详细信息，输入为申请表ID")
     @RequestMapping(value = "/adoptApplication",method = RequestMethod.GET)
     public Result<JSONObject> getAdoptApplication(@RequestParam("application_id") String applicationID){

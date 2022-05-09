@@ -1,0 +1,25 @@
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: service-loginRegister
+  profiles:
+    # 环境配置
+    active: test
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 112.124.12.171:8848
+        # 服务注册到哪个命名空间
+        namespace: 92b2a253-9765-4379-a428-7f9b9e6b7d1a
+      config:
+        # 配置中心地址
+        server-addr: 112.124.12.171:8848
+        # 服务从哪个命名空间拉取配置
+        namespace: 92b2a253-9765-4379-a428-7f9b9e6b7d1a
+        # 配置文件格式
+        file-extension: properties
+        # 共享配置
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({"com.pet"})
 @EntityScan("com.pet.models")
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class PetManage {
     public static void main(String[] args)
     {

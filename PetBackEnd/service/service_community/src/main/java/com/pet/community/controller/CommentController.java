@@ -26,7 +26,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/comment")
+@RequestMapping("api/community/comment")
 @RefreshScope
 @Api(value="comment",tags = "评论管理")
 public class CommentController {
