@@ -18,6 +18,8 @@
         <module>service_community</module>
         <module>service_petManage</module>
         <module>service_userManage</module>
+        <module>service_payMent</module>
+        <module>service_logistics</module>
     </modules>
 
     <properties>
