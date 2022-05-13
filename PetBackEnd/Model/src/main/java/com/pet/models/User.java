@@ -42,6 +42,28 @@ public class User {
     @Column(name = "open_ID", length = 30)
     private String openId;
 
+    @Column(name = "blacklist", nullable = false)
+    private Integer blacklist;
+
+    @Column(name = "behavior", length = 200)
+    private String behavior;
+
+    public String getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(String behavior) {
+        this.behavior = behavior;
+    }
+
+    public Integer getBlacklist() {
+        return blacklist;
+    }
+
+    public void setBlacklist(Integer blacklist) {
+        this.blacklist = blacklist;
+    }
+
     public String getOpenId() {
         return openId;
     }

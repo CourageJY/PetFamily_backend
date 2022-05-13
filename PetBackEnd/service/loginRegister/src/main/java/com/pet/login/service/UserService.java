@@ -1,10 +1,13 @@
 package com.pet.login.service;
 
 import com.pet.login.repository.UserRepository;
+import com.pet.models.FindApplication;
+import com.pet.models.Pet;
 import com.pet.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,4 +40,10 @@ public class UserService {
     public void modifyById(User u){
         user.save(u);
     }
+
+    public List<User> getAllUser(){
+        Optional<List<User>> users = Optional.of((List<User>)user.findAll());
+        return users.orElse(null);
+    }
+
 }
