@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class DetailLogisticService {
+public class DetailLogisticsService {
     @Autowired
     private OrderInfoRepository orderInfoRepository;
     public OrderInfo getById(String orderID)

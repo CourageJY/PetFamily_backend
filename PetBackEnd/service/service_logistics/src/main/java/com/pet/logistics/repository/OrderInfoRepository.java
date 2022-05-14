@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface OrderInfoRepository extends CrudRepository<OrderInfo,String> {
-    List<BriefLogisticsInfoReturn> findAllByOrderStatus(String s);
+    List<OrderInfo> findAllByOrderStatus(String s);
 }

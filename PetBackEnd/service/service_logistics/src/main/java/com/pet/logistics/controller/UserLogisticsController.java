@@ -1,6 +1,7 @@
 package com.pet.logistics.controller;
 
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,5 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 @Api(value="logisticsUser",tags = "物流用户方面的接口")
 public class UserLogisticsController {
+
 
 }

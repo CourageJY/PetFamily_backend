@@ -1,7 +1,7 @@
 package com.pet.logistics.controller;
 
 import com.pet.logistics.entity.DetailLogisticsInfoReturn;
-import com.pet.logistics.service.DetailLogisticService;
+import com.pet.logistics.service.DetailLogisticsService;
 import com.pet.models.OrderInfo;
 import com.pet.util.utils.Result;
 import io.swagger.annotations.Api;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/logistics")
 @RefreshScope
 @Api(value="logisticsDetail",tags = "物流方面的通用接口")
-public class DetailLogisticController {
+public class DetailLogisticsController {
     @Autowired
-    private DetailLogisticService detailLogisticService;
+    private DetailLogisticsService detailLogisticsService;
 
     @ApiOperation(value="查询订单详细信息")
     @RequestMapping(value= "/detail",method = RequestMethod.GET)
     public Result<DetailLogisticsInfoReturn> detailLogisticsInfoReturnResult(@RequestParam("orderID") String orderID)
     {
-        OrderInfo orderInfo =detailLogisticService.getById(orderID);
+        OrderInfo orderInfo = detailLogisticsService.getById(orderID);
         DetailLogisticsInfoReturn detailLogisticsInfoReturn=new DetailLogisticsInfoReturn(orderInfo.getId(),orderInfo.getPetId(),
                 orderInfo.getUserId(),orderInfo.getLocationX(),orderInfo.getLocationY(),orderInfo.getLogisticsTime(),
                 orderInfo.getDestination(),orderInfo.getLogisticsStatus());
