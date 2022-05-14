@@ -1,6 +1,7 @@
 package com.pet.logistics.service;
 
 import com.pet.logistics.entity.LogisticsLocationRequest;
+import com.pet.logistics.entity.LogisticsStatusRequest;
 import com.pet.logistics.repository.OrderInfoRepository;
 import com.pet.models.OrderInfo;
 import com.pet.util.enums.LogisticsState;
@@ -41,6 +42,16 @@ public class InstitutionLogisticsService {
             orderInfo.setLogisticsStatus(LogisticsState.Transporting.toString());
         orderInfo.setLocationX(logisticsLocationRequest.location_X);
         orderInfo.setLocationY(logisticsLocationRequest.location_Y);
+        orderInfoRepository.save(orderInfo);
+        return true;
+    }
+
+    public Boolean updateStatus(LogisticsStatusRequest logisticsStatusRequest)
+    {
+        OrderInfo orderInfo=orderInfoRepository.findById(logisticsStatusRequest.orderID).orElse(null);
+        if(orderInfo==null)
+            return false;
+        orderInfo.setLogisticsStatus(logisticsStatusRequest.logisticsStatus);
         orderInfoRepository.save(orderInfo);
         return true;
     }

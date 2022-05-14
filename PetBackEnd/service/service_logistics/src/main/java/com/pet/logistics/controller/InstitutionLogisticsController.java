@@ -2,6 +2,7 @@ package com.pet.logistics.controller;
 
 import com.pet.logistics.entity.BriefLogisticsInfoReturn;
 import com.pet.logistics.entity.LogisticsLocationRequest;
+import com.pet.logistics.entity.LogisticsStatusRequest;
 import com.pet.logistics.service.InstitutionLogisticsService;
 import com.pet.models.OrderInfo;
 import com.pet.util.config.NeedToken;
@@ -59,6 +60,19 @@ public class InstitutionLogisticsController {
         }
         else {
             return Result.wrapErrorResult("更新位置信息失败");
+        }
+    }
+
+    @NeedToken(role = Role.Institution)
+    @ApiOperation(value = "机构修改运输状态")
+    @RequestMapping(value = "/status",method = RequestMethod.POST)
+    public Result<String> updateStatus(@RequestBody LogisticsStatusRequest logisticsStatusRequest)
+    {
+        if(institutionLogisticsService.updateStatus(logisticsStatusRequest)){
+            return Result.wrapSuccessfulResult("更新订单状态信息成功");
+        }
+        else {
+            return Result.wrapErrorResult("更新订单状态信息失败");
         }
     }
 }
