@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/logistics/user")
+@RequestMapping("api/logistics/institution")
 @RefreshScope
-@Api(value="logisticsUser",tags = "物流用户方面的接口")
-public class LogisticsController {
-
+@Api(value="logisticsInstitution",tags = "物流机构方面的接口")
+public class InstitutionLogisticsController {
 }
