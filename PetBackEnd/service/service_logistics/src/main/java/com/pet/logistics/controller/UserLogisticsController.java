@@ -1,5 +1,6 @@
 package com.pet.logistics.controller;
 
+import com.pet.logistics.entity.BriefLogisticsInfoReturn;
 import com.pet.logistics.entity.LogisticsLocationRequest;
 import com.pet.logistics.entity.LogisticsLocationReturn;
 import com.pet.logistics.service.DetailLogisticsService;
@@ -13,6 +14,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -39,5 +43,29 @@ public class UserLogisticsController {
         return Result.wrapSuccessfulResult(logisticsLocationReturn);
     }
 
+    @NeedToken(role = Role.NormalUser)
+    @ApiOperation(value = "获取订单列表")
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public Result<List<BriefLogisticsInfoReturn>> logisticsList(@RequestParam ("userID") String userID)
+    {
+        List<OrderInfo> orderInfoList=userLogisticsService.getLogisticsListByUserID(userID);
+        List<BriefLogisticsInfoReturn> briefLogisticsInfoReturns =new ArrayList<>();
+        for(OrderInfo o:orderInfoList)
+        {
+            if(o.getLogisticsStatus()!=null)
+            {
+                BriefLogisticsInfoReturn briefLogisticsInfoReturn =new BriefLogisticsInfoReturn(o.getId(),o.getPetId(),o.getUserId(),o.getDestination(),o.getLogisticsStatus());
+                briefLogisticsInfoReturns.add(briefLogisticsInfoReturn);
+            }
+        }
+        if(briefLogisticsInfoReturns.isEmpty())
+        {
+            return Result.wrapErrorResult("不存在订单");
+        }
+        else
+        {
+            return Result.wrapSuccessfulResult(briefLogisticsInfoReturns);
+        }
+    }
 
 }

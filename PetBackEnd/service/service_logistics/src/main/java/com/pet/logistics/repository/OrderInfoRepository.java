@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface OrderInfoRepository extends CrudRepository<OrderInfo,String> {
     List<OrderInfo> findAllByOrderStatus(String s);
+    List<OrderInfo> findAllByUserId(String s);
 }
