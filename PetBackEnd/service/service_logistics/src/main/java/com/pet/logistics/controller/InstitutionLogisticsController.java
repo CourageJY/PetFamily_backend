@@ -1,6 +1,7 @@
 package com.pet.logistics.controller;
 
 import com.pet.logistics.entity.BriefLogisticsInfoReturn;
+import com.pet.logistics.entity.LogisticsLocationRequest;
 import com.pet.logistics.service.InstitutionLogisticsService;
 import com.pet.models.OrderInfo;
 import com.pet.util.config.NeedToken;
@@ -11,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,4 +49,16 @@ public class InstitutionLogisticsController {
 
     }
 
+    @NeedToken(role = Role.Institution)
+    @ApiOperation(value = "机构上传运输位置")
+    @RequestMapping(value = "/location",method = RequestMethod.POST)
+    public Result<String> updateLocation(@RequestBody LogisticsLocationRequest logisticsLocationRequest)
+    {
+        if(institutionLogisticsService.updateLocation(logisticsLocationRequest)){
+            return Result.wrapSuccessfulResult("更新位置信息成功");
+        }
+        else {
+            return Result.wrapErrorResult("更新位置信息失败");
+        }
+    }
 }

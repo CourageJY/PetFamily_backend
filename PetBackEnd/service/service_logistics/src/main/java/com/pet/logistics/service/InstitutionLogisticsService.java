@@ -1,5 +1,6 @@
 package com.pet.logistics.service;
 
+import com.pet.logistics.entity.LogisticsLocationRequest;
 import com.pet.logistics.repository.OrderInfoRepository;
 import com.pet.models.OrderInfo;
 import com.pet.util.enums.LogisticsState;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class InstitutionLogisticsService {
@@ -30,4 +32,16 @@ public class InstitutionLogisticsService {
         return orderInfoList;
     }
 
+    public Boolean updateLocation(LogisticsLocationRequest logisticsLocationRequest)
+    {
+        OrderInfo orderInfo=orderInfoRepository.findById(logisticsLocationRequest.orderID).orElse(null);
+        if(orderInfo==null)
+            return false;
+        if(Objects.equals(orderInfo.getLogisticsStatus(), LogisticsState.WaitingTransport.toString()))
+            orderInfo.setLogisticsStatus(LogisticsState.Transporting.toString());
+        orderInfo.setLocationX(logisticsLocationRequest.location_X);
+        orderInfo.setLocationY(logisticsLocationRequest.location_Y);
+        orderInfoRepository.save(orderInfo);
+        return true;
+    }
 }
