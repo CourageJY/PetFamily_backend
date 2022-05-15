@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -218,6 +219,7 @@ public class CommonPostController {
         }
 
         if(content==null){
+            Collections.sort(posts);
             return Result.wrapSuccessfulResult(posts);
         }
         else{
@@ -227,6 +229,7 @@ public class CommonPostController {
                     resultPosts.add(postBriefInfo);
                 }
             }
+            Collections.sort(posts);
             return Result.wrapSuccessfulResult(resultPosts);
         }
     }

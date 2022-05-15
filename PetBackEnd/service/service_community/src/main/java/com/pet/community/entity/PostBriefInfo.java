@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostBriefInfo{
+public class PostBriefInfo implements Comparable<PostBriefInfo>{
     //帖子
     public String postId;
     public String status;
@@ -171,4 +171,12 @@ public class PostBriefInfo{
     public void setPhotos(List<String> photos) {
         this.photos = photos;
     }
+
+    @Override
+    public int compareTo(PostBriefInfo postBriefInfo) {
+        // 重写Comparable接口的compareTo方法，根据年龄升序排列，降序修改相减顺序即可
+        return postBriefInfo.getTime().compareTo(this.time);
+    }
+
+
 }
