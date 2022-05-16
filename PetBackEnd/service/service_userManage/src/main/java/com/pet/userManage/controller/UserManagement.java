@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/use/management")
+@RequestMapping("api/user/management")
 @RefreshScope
 @Api(value="management",tags = "用户信息管理")
 public class UserManagement {
@@ -28,7 +28,7 @@ public class UserManagement {
     @Autowired
     private UserService userService;
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="发送指定内容的邮件")
     @RequestMapping(value = "/getCode",method = RequestMethod.POST)
     public Result<String> sendEmail(@RequestBody EmailSendInfo emailSendInfo){
@@ -43,9 +43,9 @@ public class UserManagement {
         return Result.wrapSuccessfulResult("发送成功");
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="根据id获取指定用户信息")
-    @RequestMapping(value = "/getUser",method = RequestMethod.POST)
+    @RequestMapping(value = "/getUser",method = RequestMethod.GET)
     public Result<User> getUser(@RequestParam("userID") String userID){
         User user = userService.getById(userID);
         if(user==null){
@@ -57,9 +57,9 @@ public class UserManagement {
         return Result.wrapSuccessfulResult(user);
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="获取所有用户信息")
-    @RequestMapping(value = "/getAllUser",method = RequestMethod.POST)
+    @RequestMapping(value = "/getAllUser",method = RequestMethod.GET)
     public Result<List<User>> getAllUser(){
         List<User> users = userService.getAllUser();
         if(users==null){
@@ -73,7 +73,7 @@ public class UserManagement {
         return Result.wrapSuccessfulResult(users);
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="将指定用户移入黑名单")
     @RequestMapping(value = "/setBlackList",method = RequestMethod.POST)
     public Result<String> setBlackList(@RequestParam("userID") String userID){
