@@ -10,8 +10,8 @@ import java.time.Instant;
 @Table(name = "order_info")
 public class OrderInfo {
     @Id
-    @Column(name = "order_ID", nullable = false, length = 256)
-    private String id;
+    @Column(name = "order_ID", nullable = false)
+    private Integer id;
 
     @Column(name = "title", length = 256)
     private String title;
@@ -37,20 +37,19 @@ public class OrderInfo {
     @Column(name = "user_ID", length = 10)
     private String userId;
 
-    @Column(name = "location_X")
-    private Double locationX;
-
-    @Column(name = "location_Y")
-    private Double locationY;
-
-    @Column(name = "logistics_status", length = 10)
-    private String logisticsStatus;
-
-    @Column(name = "logistics_time")
-    private Instant logisticsTime;
-
     @Column(name = "destination", length = 60)
     private String destination;
+
+    @Column(name = "order_no", length = 50)
+    private String orderNo;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 
     public String getDestination() {
         return destination;
@@ -60,37 +59,6 @@ public class OrderInfo {
         this.destination = destination;
     }
 
-    public Instant getLogisticsTime() {
-        return logisticsTime;
-    }
-
-    public void setLogisticsTime(Instant logisticsTime) {
-        this.logisticsTime = logisticsTime;
-    }
-
-    public String getLogisticsStatus() {
-        return logisticsStatus;
-    }
-
-    public void setLogisticsStatus(String logisticsStatus) {
-        this.logisticsStatus = logisticsStatus;
-    }
-
-    public Double getLocationY() {
-        return locationY;
-    }
-
-    public void setLocationY(Double locationY) {
-        this.locationY = locationY;
-    }
-
-    public Double getLocationX() {
-        return locationX;
-    }
-
-    public void setLocationX(Double locationX) {
-        this.locationX = locationX;
-    }
 
     public String getUserId() {
         return userId;
@@ -156,11 +124,11 @@ public class OrderInfo {
         this.title = title;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

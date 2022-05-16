@@ -104,16 +104,16 @@
         </dependency>
 
 <!--        &lt;!&ndash;Nacos&ndash;&gt;-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
-            <version>2.2.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
-            <version>2.2.0.RELEASE</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>-->
+<!--            <version>2.2.0.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-alibaba-nacos-config</artifactId>-->
+<!--            <version>2.2.0.RELEASE</version>-->
+<!--        </dependency>-->
 
         <!--Feign-->
         <dependency>
@@ -206,7 +206,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.txt</include>
                 </includes>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
