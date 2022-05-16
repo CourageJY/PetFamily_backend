@@ -1,8 +1,11 @@
 package com.pet.logistics.service;
 
+import com.pet.logistics.entity.BriefLogisticsInfoReturn;
 import com.pet.logistics.entity.LogisticsLocationRequest;
 import com.pet.logistics.entity.LogisticsStatusRequest;
+import com.pet.logistics.repository.LogisticsRepository;
 import com.pet.logistics.repository.OrderInfoRepository;
+import com.pet.models.LogisticsInfo;
 import com.pet.models.OrderInfo;
 import com.pet.util.enums.LogisticsState;
 import com.pet.util.enums.OrderStatus;
@@ -11,48 +14,55 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class InstitutionLogisticsService {
     @Autowired
     private OrderInfoRepository orderInfoRepository;
 
-    public List<OrderInfo> getWaitingOrders(){
-        //首先获取所有支付成功的订单
-        List<OrderInfo> orderInfoList=orderInfoRepository.findAllByOrderStatus(OrderStatus.SUCCESS.toString());
-        //对于所有支付成功的订单，如果运输状态为空，则将其置为待运输
-        for(OrderInfo o:orderInfoList)
+    @Autowired
+    private LogisticsRepository logisticsRepository;
+
+    public List<LogisticsInfo> getOrders(String status)
+    {
+        if(Objects.equals(status, "All"))
         {
-            if (o.getLogisticsStatus() == null)
-            {
-                o.setLogisticsStatus(LogisticsState.WaitingTransport.toString());//?怎么保存进数据库
-                orderInfoRepository.save(o);
-            }
+            return (List<LogisticsInfo>) logisticsRepository.findAll();
         }
-        //返回待运输列表
-        return orderInfoList;
+        else
+        {
+            return logisticsRepository.findAllByLogisticsStatus(status);
+        }
+
     }
 
     public Boolean updateLocation(LogisticsLocationRequest logisticsLocationRequest)
     {
-        OrderInfo orderInfo=orderInfoRepository.findById(logisticsLocationRequest.orderID).orElse(null);
-        if(orderInfo==null)
+        Optional<LogisticsInfo> getLogisticsInfo=logisticsRepository.findById(logisticsLocationRequest.orderNo);
+        LogisticsInfo logisticsInfo=getLogisticsInfo.orElse(null);
+        if(logisticsInfo==null)
             return false;
-        if(Objects.equals(orderInfo.getLogisticsStatus(), LogisticsState.WaitingTransport.toString()))
-            orderInfo.setLogisticsStatus(LogisticsState.Transporting.toString());
-        orderInfo.setLocationX(logisticsLocationRequest.location_X);
-        orderInfo.setLocationY(logisticsLocationRequest.location_Y);
-        orderInfoRepository.save(orderInfo);
-        return true;
+        else
+        {
+            logisticsInfo.setLocationX(logisticsLocationRequest.location_X);
+            logisticsInfo.setLocationY(logisticsLocationRequest.location_Y);
+            logisticsRepository.save(logisticsInfo);
+            return true;
+        }
     }
 
     public Boolean updateStatus(LogisticsStatusRequest logisticsStatusRequest)
     {
-        OrderInfo orderInfo=orderInfoRepository.findById(logisticsStatusRequest.orderID).orElse(null);
-        if(orderInfo==null)
+        Optional<LogisticsInfo> getLogisticsInfo=logisticsRepository.findById(logisticsStatusRequest.orderNo);
+        LogisticsInfo logisticsInfo=getLogisticsInfo.orElse(null);
+        if(logisticsInfo==null)
             return false;
-        orderInfo.setLogisticsStatus(logisticsStatusRequest.logisticsStatus);
-        orderInfoRepository.save(orderInfo);
-        return true;
+        else
+        {
+            logisticsInfo.setLogisticsStatus(logisticsStatusRequest.logisticsStatus);
+            logisticsRepository.save(logisticsInfo);
+            return true;
+        }
     }
 }

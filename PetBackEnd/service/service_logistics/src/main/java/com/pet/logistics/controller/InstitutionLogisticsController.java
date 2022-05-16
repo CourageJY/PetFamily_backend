@@ -4,6 +4,7 @@ import com.pet.logistics.entity.BriefLogisticsInfoReturn;
 import com.pet.logistics.entity.LogisticsLocationRequest;
 import com.pet.logistics.entity.LogisticsStatusRequest;
 import com.pet.logistics.service.InstitutionLogisticsService;
+import com.pet.models.LogisticsInfo;
 import com.pet.models.OrderInfo;
 import com.pet.util.config.NeedToken;
 import com.pet.util.enums.Role;
@@ -30,18 +31,18 @@ public class InstitutionLogisticsController {
     @ApiOperation(value="查询待运输订单列表")
     @NeedToken(role = Role.Institution)
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Result<List<BriefLogisticsInfoReturn>> WaitingList()
+    public Result<List<BriefLogisticsInfoReturn>> WaitingList(@RequestParam("status") String status)
     {
-        List<OrderInfo> orderInfoList=institutionLogisticsService.getWaitingOrders();
+        List<LogisticsInfo> logisticsInfos=institutionLogisticsService.getOrders(status);
         List<BriefLogisticsInfoReturn> briefLogisticsInfoReturns =new ArrayList<>();
-        for(OrderInfo o:orderInfoList)
+        for(LogisticsInfo o:logisticsInfos)
         {
-            BriefLogisticsInfoReturn briefLogisticsInfoReturn =new BriefLogisticsInfoReturn(o.getId(),o.getPetId(),o.getUserId(),o.getDestination(),o.getLogisticsStatus());
+            BriefLogisticsInfoReturn briefLogisticsInfoReturn =new BriefLogisticsInfoReturn(o.getId(),o.getDestination(),o.getLogisticsStatus());
             briefLogisticsInfoReturns.add(briefLogisticsInfoReturn);
         }
         if(briefLogisticsInfoReturns.isEmpty())
         {
-            return Result.wrapErrorResult("不存在待运输订单");
+            return Result.wrapErrorResult("不存在该类型的订单");
         }
         else
         {

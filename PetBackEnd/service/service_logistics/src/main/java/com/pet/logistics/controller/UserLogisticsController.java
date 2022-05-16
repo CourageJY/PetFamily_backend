@@ -24,8 +24,6 @@ import java.util.List;
 @RefreshScope
 @Api(value="logisticsUser",tags = "物流用户方面的接口")
 public class UserLogisticsController {
-    @Autowired
-    private DetailLogisticsService detailLogisticsService;
 
     @Autowired
     private UserLogisticsService userLogisticsService;
@@ -33,39 +31,15 @@ public class UserLogisticsController {
     @NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "获取订单位置信息")
     @RequestMapping(value = "/location",method = RequestMethod.GET)
-    public Result<LogisticsLocationReturn> getLocation(@RequestParam("orderID") String orderID)
+    public Result<LogisticsLocationReturn> getLocation(@RequestParam("orderNo") String orderNo)
     {
-        OrderInfo orderInfo=detailLogisticsService.getById(orderID);
-        if(orderInfo==null){
-            return Result.wrapErrorResult("该订单不存在");
+        LogisticsLocationReturn logisticsLocationReturn=userLogisticsService.getLocation(orderNo);
+        if(logisticsLocationReturn==null)
+        {
+            return Result.wrapErrorResult("不存在该订单！");
         }
-        LogisticsLocationReturn logisticsLocationReturn=new LogisticsLocationReturn(orderInfo.getLocationX(), orderInfo.getLocationY());
         return Result.wrapSuccessfulResult(logisticsLocationReturn);
     }
 
-    @NeedToken(role = Role.NormalUser)
-    @ApiOperation(value = "获取订单列表")
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Result<List<BriefLogisticsInfoReturn>> logisticsList(@RequestParam ("userID") String userID)
-    {
-        List<OrderInfo> orderInfoList=userLogisticsService.getLogisticsListByUserID(userID);
-        List<BriefLogisticsInfoReturn> briefLogisticsInfoReturns =new ArrayList<>();
-        for(OrderInfo o:orderInfoList)
-        {
-            if(o.getLogisticsStatus()!=null)
-            {
-                BriefLogisticsInfoReturn briefLogisticsInfoReturn =new BriefLogisticsInfoReturn(o.getId(),o.getPetId(),o.getUserId(),o.getDestination(),o.getLogisticsStatus());
-                briefLogisticsInfoReturns.add(briefLogisticsInfoReturn);
-            }
-        }
-        if(briefLogisticsInfoReturns.isEmpty())
-        {
-            return Result.wrapErrorResult("不存在订单");
-        }
-        else
-        {
-            return Result.wrapSuccessfulResult(briefLogisticsInfoReturns);
-        }
-    }
 
 }

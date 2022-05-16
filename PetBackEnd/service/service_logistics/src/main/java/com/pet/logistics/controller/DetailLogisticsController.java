@@ -21,12 +21,9 @@ public class DetailLogisticsController {
 
     @ApiOperation(value="查询订单详细信息")
     @RequestMapping(value= "/detail",method = RequestMethod.GET)
-    public Result<DetailLogisticsInfoReturn> detailLogisticsInfoReturnResult(@RequestParam("orderID") String orderID)
+    public Result<DetailLogisticsInfoReturn> detailLogisticsInfoReturnResult(@RequestParam("orderNo") String orderNo)
     {
-        OrderInfo orderInfo = detailLogisticsService.getById(orderID);
-        DetailLogisticsInfoReturn detailLogisticsInfoReturn=new DetailLogisticsInfoReturn(orderInfo.getId(),orderInfo.getPetId(),
-                orderInfo.getUserId(),orderInfo.getLocationX(),orderInfo.getLocationY(),orderInfo.getLogisticsTime(),
-                orderInfo.getDestination(),orderInfo.getLogisticsStatus());
+        DetailLogisticsInfoReturn detailLogisticsInfoReturn=detailLogisticsService.getDetailInfo(orderNo);
         if(detailLogisticsInfoReturn==null){
             return Result.wrapErrorResult("不存在该订单！");
         }
