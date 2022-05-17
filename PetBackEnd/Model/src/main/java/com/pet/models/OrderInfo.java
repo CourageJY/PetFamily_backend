@@ -10,7 +10,7 @@ import java.time.Instant;
 @Table(name = "order_info")
 public class OrderInfo {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "order_ID", nullable = false)
     private Integer id;
 
     @Column(name = "title", length = 256)
@@ -22,20 +22,11 @@ public class OrderInfo {
     @Column(name = "total_fee")
     private Integer totalFee;
 
-    @Column(name = "pet_id", nullable = false, length = 10)
+    @Column(name = "pet_ID", nullable = false, length = 10)
     private String petId;
 
     @Column(name = "order_status", length = 10)
     private String orderStatus;
-
-    @Column(name = "user_id", length = 10)
-    private String userId;
-
-    @Column(name = "destination", length = 60)
-    private String destination;
-
-    @Column(name = "order_no", length = 50)
-    private String orderNo;
 
     @Column(name = "create_time")
     private Instant createTime;
@@ -43,21 +34,14 @@ public class OrderInfo {
     @Column(name = "update_time")
     private Instant updateTime;
 
-    public Instant getUpdateTime() {
-        return updateTime;
-    }
+    @Column(name = "user_ID", length = 10)
+    private String userId;
 
-    public void setUpdateTime(Instant updateTime) {
-        this.updateTime = updateTime;
-    }
+    @Column(name = "destination", length = 60)
+    private String destination;
 
-    public Instant getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Instant createTime) {
-        this.createTime = createTime;
-    }
+    @Column(name = "order_no", length = 50)
+    private String orderNo;
 
     public String getOrderNo() {
         return orderNo;
@@ -75,12 +59,29 @@ public class OrderInfo {
         this.destination = destination;
     }
 
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Instant getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Instant updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Instant getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Instant createTime) {
+        this.createTime = createTime;
     }
 
     public String getOrderStatus() {
