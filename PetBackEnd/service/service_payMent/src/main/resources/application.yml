@@ -11,7 +11,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.14.34.216:3306/payment_demo?serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://106.14.34.216:3306/db_server?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
     password: Lky20011102.
 
