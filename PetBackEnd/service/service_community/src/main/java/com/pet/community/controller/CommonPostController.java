@@ -229,7 +229,7 @@ public class CommonPostController {
                     resultPosts.add(postBriefInfo);
                 }
             }
-            Collections.sort(posts);
+            Collections.sort(resultPosts);
             return Result.wrapSuccessfulResult(resultPosts);
         }
     }

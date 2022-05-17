@@ -3,8 +3,8 @@ package com.pet.models;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
 @Table(name = "pet")
+@Entity
 public class Pet {
     @Id
     @Column(name = "pet_ID", nullable = false, length = 10)
@@ -19,7 +19,7 @@ public class Pet {
     @Column(name = "time")
     private LocalDate time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "adopt_user")
     private User adoptUser;
 
@@ -47,15 +47,34 @@ public class Pet {
     @Column(name = "area", length = 40)
     private String area;
 
-    @Column(name = "price")
-    private Integer price;
+    public Pet(){}//默认构造函数
 
-    public Integer getPrice() {
-        return price;
+    public Pet(String id, String name, String type, LocalDate time, User adoptUser, LocalDate adoptTime, Integer age, Boolean sex, String color, String description, String adoptState, String photo, String area) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.time = time;
+        this.adoptUser = adoptUser;
+        this.adoptTime = adoptTime;
+        this.age = age;
+        this.sex = sex;
+        this.color = color;
+        this.description = description;
+        this.adoptState = adoptState;
+        this.photo = photo;
+        this.area = area;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public Pet(String name, String type, Integer age, Boolean sex, String color,
+               String description, String photo, String area) {
+        this.name = name;
+        this.type = type;
+        this.age = age;
+        this.sex = sex;
+        this.color = color;
+        this.description = description;
+        this.photo = photo;
+        this.area = area;
     }
 
     public String getArea() {
@@ -64,14 +83,6 @@ public class Pet {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public String getAdoptState() {
@@ -88,6 +99,14 @@ public class Pet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getColor() {

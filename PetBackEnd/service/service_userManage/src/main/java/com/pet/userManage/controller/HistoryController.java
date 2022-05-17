@@ -1,17 +1,9 @@
 package com.pet.userManage.controller;
 
-import com.pet.models.AdoptApplication;
-import com.pet.models.FindApplication;
-import com.pet.models.ReportApplication;
-import com.pet.models.SendApplication;
-import com.pet.userManage.entity.AdoptBriefInfo;
-import com.pet.userManage.entity.FindBriefInfo;
-import com.pet.userManage.entity.ReportBriefInfo;
-import com.pet.userManage.entity.SendBriefInfo;
-import com.pet.userManage.service.AdoptApplicationService;
-import com.pet.userManage.service.FindApplicationService;
-import com.pet.userManage.service.ReportApplicationService;
-import com.pet.userManage.service.SendApplicationService;
+import com.pet.login.service.UserService;
+import com.pet.models.*;
+import com.pet.userManage.entity.*;
+import com.pet.userManage.service.*;
 import com.pet.util.config.NeedToken;
 import com.pet.util.enums.Role;
 import com.pet.util.utils.Result;
@@ -21,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,29 +22,44 @@ import java.util.List;
 @RestController
 @RequestMapping("api/user/history")
 @RefreshScope
-@Api(value="history",tags = "获取所有申请表历史")
+@Api(value="history",tags = "获取所有申请表以及发帖的历史")
 public class HistoryController {
+    @Autowired
     private AdoptApplicationService adopt;
+
+    @Autowired
     private FindApplicationService find;
+
+    @Autowired
     private SendApplicationService send;
+
+    @Autowired
     private ReportApplicationService report;
 
     @Autowired
-    public void setAdopt(AdoptApplicationService adopt){
-        this.adopt = adopt;
-    }
+    private CommonPostService commonPostService;
+
     @Autowired
-    public void setFind(FindApplicationService find){
-        this.find = find;
-    }
+    private HelpPostService helpPostService;
+
     @Autowired
-    public void setSend(SendApplicationService send){
-        this.send = send;
-    }
-    @Autowired
-    public void setReport(ReportApplicationService report){
-        this.report = report;
-    }
+    private UserService userService;
+
+//    public void setAdopt(AdoptApplicationService adopt){
+//        this.adopt = adopt;
+//    }
+//
+//    public void setFind(FindApplicationService find){
+//        this.find = find;
+//    }
+//
+//    public void setSend(SendApplicationService send){
+//        this.send = send;
+//    }
+//
+//    public void setReport(ReportApplicationService report){
+//        this.report = report;
+//    }
 
     @NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "获取领养表历史")
@@ -98,5 +107,33 @@ public class HistoryController {
             sendBriefInfos.add(new SendBriefInfo(sendApplication));
         }
         return Result.wrapSuccessfulResult(sendBriefInfos);
+    }
+
+    //@NeedToken(role = Role.NormalUser)
+    @ApiOperation(value = "返回指定用户id的帖子列表")
+    @RequestMapping(value = "/post",method = RequestMethod.GET)
+    public Result<List<PostBriefInfo>>getPostInfoList(@RequestParam("userID") String userID){
+        User user=userService.getById(userID);
+        if(user==null){
+            return Result.wrapErrorResult("该用户不存在");
+        }
+
+        //普通
+        List<CommonPost> commonPosts= commonPostService.getByUser(user);
+        List<PostBriefInfo> posts=new ArrayList<>();
+        for(CommonPost commonPost:commonPosts){
+            PostBriefInfo postBriefInfo=new PostBriefInfo(commonPost);
+            posts.add(postBriefInfo);
+        }
+
+        //求助
+        List<HelpPost> helpPosts= helpPostService.getByUser(user);
+        for(HelpPost helpPost:helpPosts){
+            PostBriefInfo postBriefInfo=new PostBriefInfo(helpPost);
+            posts.add(postBriefInfo);
+        }
+
+        Collections.sort(posts);
+        return Result.wrapSuccessfulResult(posts);
     }
 }
