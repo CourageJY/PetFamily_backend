@@ -10,7 +10,6 @@ import com.pet.pay.service.OrderInfoService;
 import com.pet.pay.util.OrderNoUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Resource
     private ProductMapper productMapper;
 
-    /*@Resource
-    private OrderInfoMapper orderInfoMapper;*/
+    @Resource
+    private OrderInfoMapper orderInfoMapper;
 
     @Override
     public OrderInfo createOrderByPetId(OrderGenerate orderGenerate) {
@@ -46,7 +45,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         orderInfo.setTitle("宠物服务");
         orderInfo.setOrderNo(OrderNoUtils.getOrderNo()); //订单号
         orderInfo.setPetId(orderGenerate.getPetId());
-        orderInfo.setTotalFee(product.getPrice()); //分
+        if(product == null)
+            orderInfo.setTotalFee(1);//默认为0.01元
+        else orderInfo.setTotalFee(product.getPrice()); //分
         orderInfo.setOrderStatus(OrderStatus.NOTPAY.getType());
         orderInfo.setDestination(orderGenerate.getDestination());
         orderInfo.setUserId(orderGenerate.getUserId());
@@ -123,10 +124,25 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     /**
+     * 查询创建超过seconds秒数并且未支付的订单
+     */
+    @Override
+    public List<OrderInfo> getNoPayOrderBySecondsDuration(int seconds) {
+
+        Instant instant = Instant.now().minus(Duration.ofSeconds(seconds));
+
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_status", OrderStatus.NOTPAY.getType());
+        queryWrapper.le("create_time", instant);
+
+        return baseMapper.selectList(queryWrapper);
+    }
+
+    /**
      * 查询创建超过minutes分钟并且未支付的订单
      */
     @Override
-    public List<OrderInfo> getNoPayOrderByDuration(int minutes) {
+    public List<OrderInfo> getNoPayOrderByMinutesDuration(int minutes) {
 
         Instant instant = Instant.now().minus(Duration.ofMinutes(minutes));
 
@@ -136,7 +152,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         return baseMapper.selectList(queryWrapper);
     }
-
     /**
      * 根据订单号获取订单
      */
@@ -159,7 +174,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private OrderInfo getNoPayOrderByPetId(String petId) {
 
         QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("product_id", petId);
+        queryWrapper.eq("pet_id", petId);
         queryWrapper.eq("order_status", OrderStatus.NOTPAY.getType());
 //        queryWrapper.eq("user_id", userId);
         OrderInfo orderInfo;

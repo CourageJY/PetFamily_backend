@@ -6,12 +6,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.time.LocalDate;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("Pet")
-public class Product extends BaseEntity{
+@TableName("pet")
+public class Product {
 
-    private String id;
+    private String petId;
 
     private String name;
 

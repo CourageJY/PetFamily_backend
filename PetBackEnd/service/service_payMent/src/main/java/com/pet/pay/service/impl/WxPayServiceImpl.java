@@ -1,6 +1,9 @@
 package com.pet.pay.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.gson.Gson;
 import com.pet.pay.config.WxPayConfig;
+import com.pet.pay.entity.LogisticsInfo;
 import com.pet.pay.entity.OrderGenerate;
 import com.pet.pay.entity.OrderInfo;
 import com.pet.pay.entity.RefundInfo;
@@ -9,13 +12,13 @@ import com.pet.pay.enums.wxpay.WxApiType;
 import com.pet.pay.enums.wxpay.WxNotifyType;
 import com.pet.pay.enums.wxpay.WxRefundStatus;
 import com.pet.pay.enums.wxpay.WxTradeState;
+import com.pet.pay.mapper.LogisticsInfoMapper;
+import com.pet.pay.mapper.OrderInfoMapper;
 import com.pet.pay.service.OrderInfoService;
 import com.pet.pay.service.PaymentInfoService;
 import com.pet.pay.service.RefundInfoService;
 import com.pet.pay.service.WxPayService;
-import com.pet.pay.util.HttpClientUtils;
-import com.github.wxpay.sdk.WXPayUtil;
-import com.google.gson.Gson;
+import com.pet.util.enums.LogisticsState;
 import com.wechat.pay.contrib.apache.httpclient.util.AesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,11 +30,11 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -55,6 +58,13 @@ public class WxPayServiceImpl implements WxPayService {
 
     @Resource
     private RefundInfoService refundsInfoService;
+
+    @Resource
+    private LogisticsInfoMapper logisticsInfoMapper;
+
+    @Resource
+    private OrderInfoMapper orderInfoMapper;
+
 
     @Resource
     private CloseableHttpClient wxPayNoSignClient; //无需应答签名
@@ -246,9 +256,9 @@ public class WxPayServiceImpl implements WxPayService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void checkOrderStatus(String orderNo) throws Exception {
+    public void checkOrderSuccessStatus(String orderNo) throws Exception {
 
-        log.warn("根据订单号核实订单状态 ===> {}", orderNo);
+        log.warn("根据订单号核实订单成功状态 ===> {}", orderNo);
 
         //调用微信支付查单接口
         String result = this.queryOrder(orderNo);
@@ -266,10 +276,38 @@ public class WxPayServiceImpl implements WxPayService {
 
             //如果确认订单已支付则更新本地订单状态
             orderInfoService.updateStatusByOrderNo(orderNo, OrderStatus.SUCCESS);
+
+            //将确定已经支付的订单添加到物流表中
+
+
+            QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("order_no", orderNo);
+            OrderInfo orderInfo = orderInfoMapper.selectOne(queryWrapper);
+            LogisticsInfo logisticsInfo = new LogisticsInfo();
+            logisticsInfo.setOrder_no(orderNo);
+            logisticsInfo.setLogisticsStatus(LogisticsState.WaitingTransport.toString());
+            logisticsInfo.setLogisticsTime(Instant.now());
+            logisticsInfo.setDestination(orderInfo.getDestination());
+            logisticsInfoMapper.insert(logisticsInfo);
+
             //记录支付日志
             paymentInfoService.createPaymentInfo(result);
         }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void checkOrderClosedStatus(String orderNo) throws Exception {
 
+        log.warn("根据订单号核实订单超时状态 ===> {}", orderNo);
+
+        //调用微信支付查单接口
+        String result = this.queryOrder(orderNo);
+
+        Gson gson = new Gson();
+        Map<String, String> resultMap = gson.fromJson(result, HashMap.class);
+
+        //获取微信支付端的订单状态
+        String tradeState = resultMap.get("trade_state");
         if(WxTradeState.NOTPAY.getType().equals(tradeState)){
             log.warn("核实订单未支付 ===> {}", orderNo);
 
@@ -281,7 +319,6 @@ public class WxPayServiceImpl implements WxPayService {
         }
 
     }
-
 
     /**
      * 退款

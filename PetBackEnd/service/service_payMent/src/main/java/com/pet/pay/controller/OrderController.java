@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/pay/order")
 @RefreshScope
-@Api(value="order",tags = "订单方面的接口")
+@Api(value="order",tags = "订单查询接口")
 public class OrderController {
 //    @ApiOperation(value="根据宠物信息生成订单")
 //    @RequestMapping(value = "/generate",method = RequestMethod.GET)
