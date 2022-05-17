@@ -9,8 +9,9 @@ public class AddPetRequest {
     public String description;
     public String photo;
     public String area;
+    public Integer price;
 
-    public AddPetRequest(String name, String type, Integer age, Boolean sex, String color, String description, String photo, String area) {
+    public AddPetRequest(String name, String type, Integer age, Boolean sex, String color, String description, String photo, String area,Integer price) {
         this.name = name;
         this.type = type;
         this.age = age;
@@ -19,6 +20,7 @@ public class AddPetRequest {
         this.description = description;
         this.photo = photo;
         this.area = area;
+        this.price=price;
     }
 
     public String getName() {
@@ -51,5 +53,9 @@ public class AddPetRequest {
 
     public String getArea() {
         return area;
+    }
+
+    public Integer getPrice() {
+        return price;
     }
 }

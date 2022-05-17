@@ -42,6 +42,9 @@ public class FindApplication {
     @Column(name = "phone_num", length = 13)
     private String phoneNum;
 
+    @Column(name = "phone_num", length = 200)
+    private String area;
+
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -120,5 +123,13 @@ public class FindApplication {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

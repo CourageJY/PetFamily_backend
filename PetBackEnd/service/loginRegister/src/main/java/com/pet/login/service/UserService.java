@@ -46,4 +46,10 @@ public class UserService {
         return users.orElse(null);
     }
 
+    public List<User> getAllBlackUser(){
+        Optional<List<User>> users = Optional.of((List<User>)user.getUsersByBlacklist(1));
+        return users.orElse(null);
+    }
+
+
 }

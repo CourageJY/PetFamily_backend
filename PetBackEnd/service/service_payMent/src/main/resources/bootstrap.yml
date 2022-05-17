@@ -2,7 +2,7 @@
 spring:
   application:
     # 应用名称
-    name: service_payMent
+    name: service-payMent
   profiles:
     # 环境配置
     active: test

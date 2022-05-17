@@ -40,7 +40,7 @@ public class ReportPostController {
     @Autowired
     private CommonPostRepository commonPostRepository;
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="用id查询举报的详细信息")
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
     public Result<ReportPost> ReportDetial(@RequestParam("id") String id)
@@ -52,7 +52,7 @@ public class ReportPostController {
         return Result.wrapSuccessfulResult(reportPost);
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="查询该帖子的所有举报列表")
     @RequestMapping(value = "/reportpostList",method = RequestMethod.GET)
     public Result<List<ReportPostReturnInfo>> ReportPostList(String postId)
@@ -67,7 +67,7 @@ public class ReportPostController {
         return Result.wrapSuccessfulResult(reportPostReturnInfos);
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="用id删除指定举报")
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     public Result<String> DeleteComment(String id)
@@ -81,7 +81,7 @@ public class ReportPostController {
         return Result.wrapSuccessfulResult("删除成功");
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value="创建单个举报")
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public Result<String> CreateComment(@RequestBody ReportPostCreateInfo reportPostCreateInfo,

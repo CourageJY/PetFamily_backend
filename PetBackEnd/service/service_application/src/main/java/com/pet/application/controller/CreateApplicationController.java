@@ -150,6 +150,7 @@ public class CreateApplicationController {
         public String petID;
         public String description;
         public String phoneNum;
+        public String area;
 
     }
 

@@ -32,7 +32,7 @@ public class UserInfoController {
         this.userService = userService;
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "删除用户")
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     public Result<String> DeleteUser(HttpServletRequest httpServletRequest){
@@ -44,7 +44,7 @@ public class UserInfoController {
         return Result.wrapSuccessfulResult("Success!");
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "查询用户的详细信息")
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public Result<User> UserDetail(HttpServletRequest httpServletRequest){
@@ -59,7 +59,23 @@ public class UserInfoController {
         return Result.wrapSuccessfulResult(user);
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
+    @ApiOperation(value = "查询其它用户页面的详情信息")
+    @RequestMapping(value = "/getOther",method = RequestMethod.GET)
+    public Result<User> otherUserDetail(@RequestParam("userId") String userID){
+        User user = userService.getById(userID);
+        if(user==null){
+            return Result.wrapErrorResult("该用户不存在");
+        }
+        //敏感信息置空
+        user.setSalt(null);
+        user.setPassword(null);
+        user.setPhoneNumber(null);
+        user.setEmail(null);
+        return Result.wrapSuccessfulResult(user);
+    }
+
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "修改用户的详细信息")
     @RequestMapping(value = "/modify",method = RequestMethod.POST)
     public Result<String> ModifyUser(@RequestBody UserInfo info, HttpServletRequest httpServletRequest) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
@@ -89,7 +105,7 @@ public class UserInfoController {
         public String newPwd;
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "修改用户的密码")
     @RequestMapping(value = "/modify/password",method = RequestMethod.POST)
     public Result<String> ModifyPassword(@RequestBody PwdInfo pwdInfo,
@@ -103,4 +119,10 @@ public class UserInfoController {
         userService.modifyById(user);
         return Result.wrapSuccessfulResult("Success!");
     }
+
+
+
+
+
+
 }

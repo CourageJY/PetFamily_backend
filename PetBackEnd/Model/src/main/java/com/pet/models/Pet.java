@@ -47,6 +47,9 @@ public class Pet {
     @Column(name = "area", length = 40)
     private String area;
 
+    @Column(name = "price")
+    private Integer price;
+
     public Pet(){}//默认构造函数
 
     public Pet(String id, String name, String type, LocalDate time, User adoptUser, LocalDate adoptTime, Integer age, Boolean sex, String color, String description, String adoptState, String photo, String area) {
@@ -179,5 +182,13 @@ public class Pet {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }
