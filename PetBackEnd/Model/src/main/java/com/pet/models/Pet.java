@@ -50,6 +50,38 @@ public class Pet {
     @Column(name = "price")
     private Integer price;
 
+    public Pet(){}//默认构造函数
+
+    public Pet(String id, String name, String type, LocalDate time, User adoptUser, LocalDate adoptTime, Integer age, Boolean sex, String color, String description, String adoptState, String photo, String area,Integer price) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.time = time;
+        this.adoptUser = adoptUser;
+        this.adoptTime = adoptTime;
+        this.age = age;
+        this.sex = sex;
+        this.color = color;
+        this.description = description;
+        this.adoptState = adoptState;
+        this.photo = photo;
+        this.area = area;
+        this.price=price;
+    }
+
+    public Pet(String name, String type, Integer age, Boolean sex, String color,
+               String description, String photo, String area,Integer price) {
+        this.name = name;
+        this.type = type;
+        this.age = age;
+        this.sex = sex;
+        this.color = color;
+        this.description = description;
+        this.photo = photo;
+        this.area = area;
+        this.price=price;
+    }
+
     public Integer getPrice() {
         return price;
     }

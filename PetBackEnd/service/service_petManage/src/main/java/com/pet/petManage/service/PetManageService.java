@@ -30,7 +30,7 @@ public class PetManageService {
             Pet pet = new Pet(addPetRequest.getName(), addPetRequest.getType(),
                               addPetRequest.getAge(), addPetRequest.getSex(),
                               addPetRequest.getColor(), addPetRequest.getDescription(),
-                              addPetRequest.getPhoto(), addPetRequest.getArea());
+                              addPetRequest.getPhoto(), addPetRequest.getArea(),addPetRequest.getPrice());
             pet.setId(id);
             pet.setAdoptState(PetState.canBeFoundBack.toString());
             pet.setTime(LocalDate.now());//自动注册寻回到机构的日期
