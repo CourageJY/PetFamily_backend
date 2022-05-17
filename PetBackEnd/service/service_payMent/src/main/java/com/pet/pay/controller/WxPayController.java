@@ -54,7 +54,7 @@ public class WxPayController {
      * 支付通知
      * 微信支付通过支付通知接口将用户支付成功消息通知给商户
      */
-//    @ApiOperation("支付通知，前端不调用，微信发给后端的")
+    @ApiOperation("支付通知，前端不调用，微信发给后端的")
     @PostMapping("/native/notify")
     public String nativeNotify(HttpServletRequest request, HttpServletResponse response){
 
