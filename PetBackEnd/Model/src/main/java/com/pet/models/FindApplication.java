@@ -42,7 +42,7 @@ public class FindApplication {
     @Column(name = "phone_num", length = 13)
     private String phoneNum;
 
-    @Column(name = "phone_num", length = 200)
+    @Column(name = "area", length = 200)
     private String area;
 
     public String getPhoneNum() {

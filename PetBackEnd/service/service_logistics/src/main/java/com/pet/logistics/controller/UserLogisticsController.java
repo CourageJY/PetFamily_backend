@@ -28,7 +28,7 @@ public class UserLogisticsController {
     @Autowired
     private UserLogisticsService userLogisticsService;
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value = "获取订单位置信息")
     @RequestMapping(value = "/location",method = RequestMethod.GET)
     public Result<LogisticsLocationReturn> getLocation(@RequestParam("orderNo") String orderNo)

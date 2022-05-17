@@ -29,7 +29,7 @@ public class InstitutionLogisticsController {
     private InstitutionLogisticsService institutionLogisticsService;
 
     @ApiOperation(value="查询待运输订单列表")
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public Result<List<BriefLogisticsInfoReturn>> WaitingList(@RequestParam("status") String status)
     {
@@ -51,7 +51,7 @@ public class InstitutionLogisticsController {
 
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value = "机构上传运输位置")
     @RequestMapping(value = "/location",method = RequestMethod.POST)
     public Result<String> updateLocation(@RequestBody LogisticsLocationRequest logisticsLocationRequest)
@@ -64,7 +64,7 @@ public class InstitutionLogisticsController {
         }
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value = "机构修改运输状态")
     @RequestMapping(value = "/status",method = RequestMethod.POST)
     public Result<String> updateStatus(@RequestBody LogisticsStatusRequest logisticsStatusRequest)
