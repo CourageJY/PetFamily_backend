@@ -1,10 +1,12 @@
 package com.pet.pay.service;
 
+import com.pet.pay.entity.OrderGenerate;
+
 import java.security.GeneralSecurityException;
 import java.util.Map;
 
 public interface WxPayService {
-    Map<String, Object> nativePay(Long productId) throws Exception;
+    Map<String, Object> nativePay(OrderGenerate orderGenerate) throws Exception;
 
     void processOrder(Map<String, Object> bodyMap) throws GeneralSecurityException;
 
@@ -25,6 +27,4 @@ public interface WxPayService {
     String queryBill(String billDate, String type) throws Exception;
 
     String downloadBill(String billDate, String type) throws Exception;
-
-    Map<String, Object> nativePayV2(Long productId, String remoteAddr) throws Exception;
 }

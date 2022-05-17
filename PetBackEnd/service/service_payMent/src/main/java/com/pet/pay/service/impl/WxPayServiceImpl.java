@@ -1,6 +1,7 @@
 package com.pet.pay.service.impl;
 
 import com.pet.pay.config.WxPayConfig;
+import com.pet.pay.entity.OrderGenerate;
 import com.pet.pay.entity.OrderInfo;
 import com.pet.pay.entity.RefundInfo;
 import com.pet.pay.enums.OrderStatus;
@@ -68,12 +69,12 @@ public class WxPayServiceImpl implements WxPayService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Map<String, Object> nativePay(Long productId) throws Exception {
+    public Map<String, Object> nativePay(OrderGenerate orderGenerate) throws Exception {
 
         log.info("生成订单");
 
         //生成订单
-        OrderInfo orderInfo = orderInfoService.createOrderByProductId(productId);
+        OrderInfo orderInfo = orderInfoService.createOrderByPetId(orderGenerate);
         String codeUrl = orderInfo.getCodeUrl();
         if(!StringUtils.isEmpty(codeUrl)){
             log.info("订单已存在，二维码已保存");
@@ -538,76 +539,6 @@ public class WxPayServiceImpl implements WxPayService {
             return bodyAsString;
 
         }
-    }
-
-    @Override
-    public Map<String, Object> nativePayV2(Long productId, String remoteAddr) throws Exception {
-
-        log.info("生成订单");
-
-        //生成订单
-        OrderInfo orderInfo = orderInfoService.createOrderByProductId(productId);
-        String codeUrl = orderInfo.getCodeUrl();
-        if(orderInfo != null && !StringUtils.isEmpty(codeUrl)){
-            log.info("订单已存在，二维码已保存");
-            //返回二维码
-            Map<String, Object> map = new HashMap<>();
-            map.put("codeUrl", codeUrl);
-            map.put("orderNo", orderInfo.getOrderNo());
-            return map;
-        }
-
-        log.info("调用统一下单API");
-
-        HttpClientUtils client = new HttpClientUtils(wxPayConfig.getDomain().concat(WxApiType.NATIVE_PAY_V2.getType()));
-
-        //组装接口参数
-        Map<String, String> params = new HashMap<>();
-        params.put("appid", wxPayConfig.getAppid());//关联的公众号的appid
-        params.put("mch_id", wxPayConfig.getMchId());//商户号
-        params.put("nonce_str", WXPayUtil.generateNonceStr());//生成随机字符串
-        params.put("body", orderInfo.getTitle());
-        params.put("out_trade_no", orderInfo.getOrderNo());
-
-        //注意，这里必须使用字符串类型的参数（总金额：分）
-        String totalFee = orderInfo.getTotalFee() + "";
-        params.put("total_fee", totalFee);
-
-        params.put("spbill_create_ip", remoteAddr);
-        params.put("notify_url", wxPayConfig.getNotifyDomain().concat(WxNotifyType.NATIVE_NOTIFY_V2.getType()));
-        params.put("trade_type", "NATIVE");
-
-        //将参数转换成xml字符串格式：生成带有签名的xml格式字符串
-        String xmlParams = WXPayUtil.generateSignedXml(params, wxPayConfig.getPartnerKey());
-        log.info("\n xmlParams：\n" + xmlParams);
-
-        client.setXmlParam(xmlParams);//将参数放入请求对象的方法体
-        client.setHttps(true);//使用https形式发送
-        client.post();//发送请求
-        String resultXml = client.getContent();//得到响应结果
-        log.info("\n resultXml：\n" + resultXml);
-        //将xml响应结果转成map对象
-        Map<String, String> resultMap = WXPayUtil.xmlToMap(resultXml);
-
-        //错误处理
-        if("FAIL".equals(resultMap.get("return_code")) || "FAIL".equals(resultMap.get("result_code"))){
-            log.error("微信支付统一下单错误 ===> {} ", resultXml);
-            throw new RuntimeException("微信支付统一下单错误");
-        }
-
-        //二维码
-        codeUrl = resultMap.get("code_url");
-
-        //保存二维码
-        String orderNo = orderInfo.getOrderNo();
-        orderInfoService.saveCodeUrl(orderNo, codeUrl);
-
-        //返回二维码
-        Map<String, Object> map = new HashMap<>();
-        map.put("codeUrl", codeUrl);
-        map.put("orderNo", orderInfo.getOrderNo());
-
-        return map;
     }
 
     /**

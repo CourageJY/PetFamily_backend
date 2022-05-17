@@ -13,9 +13,9 @@ public class OrderInfo  extends BaseEntity{
 
     private String orderNo;//商户订单编号
 
-    private Long userId;//用户id
+    private String userId;//用户id
 
-    private Long productId;//支付产品id
+    private String petId;//宠物产品id
 
     private Integer totalFee;//订单金额(分)
 

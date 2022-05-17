@@ -1,5 +1,6 @@
 package com.pet.pay.service.impl;
 
+import com.pet.pay.entity.OrderGenerate;
 import com.pet.pay.entity.OrderInfo;
 import com.pet.pay.entity.Product;
 import com.pet.pay.enums.OrderStatus;
@@ -9,6 +10,7 @@ import com.pet.pay.service.OrderInfoService;
 import com.pet.pay.util.OrderNoUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -28,24 +30,26 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private OrderInfoMapper orderInfoMapper;*/
 
     @Override
-    public OrderInfo createOrderByProductId(Long productId) {
+    public OrderInfo createOrderByPetId(OrderGenerate orderGenerate) {
 
-        //查找已存在但未支付的订单
-        OrderInfo orderInfo = this.getNoPayOrderByProductId(productId);
+        //查找已存在但未支付的订单，如果有该宠物Id，直接返回，防止重复下单
+        OrderInfo orderInfo = this.getNoPayOrderByPetId(orderGenerate.getPetId());
         if( orderInfo != null){
             return orderInfo;
         }
 
         //获取商品信息
-        Product product = productMapper.selectById(productId);
+        Product product = productMapper.selectById(orderGenerate.getPetId());
 
         //生成订单
         orderInfo = new OrderInfo();
         orderInfo.setTitle("宠物服务");
         orderInfo.setOrderNo(OrderNoUtils.getOrderNo()); //订单号
-        orderInfo.setProductId(productId);
+        orderInfo.setPetId(orderGenerate.getPetId());
         orderInfo.setTotalFee(product.getPrice()); //分
         orderInfo.setOrderStatus(OrderStatus.NOTPAY.getType());
+        orderInfo.setDestination(orderGenerate.getDestination());
+        orderInfo.setUserId(orderGenerate.getUserId());
         baseMapper.insert(orderInfo);
 
         return orderInfo;
@@ -73,6 +77,16 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public List<OrderInfo> listOrderByCreateTimeDesc() {
 
         QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<OrderInfo>().orderByDesc("create_time");
+        return baseMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 查询某个用户订单列表，并倒序查询
+     */
+    @Override
+    public List<OrderInfo> userListOrderByCreateTimeDesc(String userId) {
+
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<OrderInfo>().eq("user_id",userId).orderByDesc("create_time");
         return baseMapper.selectList(queryWrapper);
     }
 
@@ -139,17 +153,19 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     /**
      * 根据商品id查询未支付订单
      * 防止重复创建订单对象
-     * @param productId 产品Id
+     * @param petId 产品Id
      * @return OrderInfo实体类
      */
-    private OrderInfo getNoPayOrderByProductId(Long productId) {
+    private OrderInfo getNoPayOrderByPetId(String petId) {
 
         QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("product_id", productId);
+        queryWrapper.eq("product_id", petId);
         queryWrapper.eq("order_status", OrderStatus.NOTPAY.getType());
 //        queryWrapper.eq("user_id", userId);
         OrderInfo orderInfo;
         orderInfo = baseMapper.selectOne(queryWrapper);
         return orderInfo;
     }
+
+
 }
