@@ -4,10 +4,15 @@ import com.pet.community.entity.ReportPostCreateInfo;
 import com.pet.community.entity.ReportPostReturnInfo;
 import com.pet.community.repository.CommonPostRepository;
 import com.pet.community.repository.HelpPostRepository;
+import com.pet.community.service.CommonPostService;
+import com.pet.community.service.HelpPostService;
 import com.pet.community.service.ReportPostService;
 import com.pet.login.service.UserService;
+import com.pet.models.CommonPost;
+import com.pet.models.HelpPost;
 import com.pet.models.ReportPost;
 import com.pet.util.config.NeedToken;
+import com.pet.util.enums.PostState;
 import com.pet.util.enums.Role;
 import com.pet.util.utils.JwtUtil;
 import com.pet.util.utils.Result;
@@ -39,6 +44,12 @@ public class ReportPostController {
 
     @Autowired
     private CommonPostRepository commonPostRepository;
+
+    @Autowired
+    private CommonPostService commonPostService;
+
+    @Autowired
+    private HelpPostService helpPostService;
 
     //@NeedToken(role = Role.both)
     @ApiOperation(value="用id查询举报的详细信息")
@@ -89,6 +100,18 @@ public class ReportPostController {
     {
         if(!commonPostRepository.existsById(reportPostCreateInfo.postId)&&!helpPostRepository.existsById(reportPostCreateInfo.postId)){
             return Result.wrapErrorResult("该帖子不存在！");
+        }
+        //更改帖子的状态
+        CommonPost commonPost=commonPostService.getByID(reportPostCreateInfo.postId);
+        if(commonPost!=null){
+            commonPost.setStatus(PostState.reported.toString());
+            commonPostService.createOrUpdate(commonPost);
+        }
+
+        HelpPost helpPost=helpPostService.getByID(reportPostCreateInfo.postId);
+        if(helpPost!=null){
+            helpPost.setStatus(PostState.reported.toString());
+            helpPostService.createOrUpdate(helpPost);
         }
 
         ReportPost reportPost=new ReportPost();

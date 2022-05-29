@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin("*")
 @RestController
@@ -97,7 +98,7 @@ public class CommonPostController {
 
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="用id删除指定帖子")
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     public Result<String> DeleteCommonPost(String id)
@@ -127,7 +128,7 @@ public class CommonPostController {
         return Result.wrapSuccessfulResult("删除成功");
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value="创建单个普通帖子")
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public Result<String> CreateCommonPost(@RequestBody CommonPostCreateInfo commonPostCreateInfo,
@@ -159,7 +160,7 @@ public class CommonPostController {
         return Result.wrapSuccessfulResult("创建成功");
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="修改单个帖子，其中id为欲修改的帖子编号")
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Result<String> UpdateCommonPost(@RequestBody CommonPostUpdateInfo commonPostUpdateInfo,
@@ -198,7 +199,7 @@ public class CommonPostController {
         return Result.wrapSuccessfulResult("修改成功");
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="查询满足指定条件的所有帖子(普通和求助)的列表，若content为空，则返回所有帖子")
     @RequestMapping(value = "/allPostList",method = RequestMethod.GET)
     public Result<List<PostBriefInfo>> AllPostList(String content)
@@ -207,6 +208,10 @@ public class CommonPostController {
         List<CommonPost> commonPosts= commonPostService.getAll();
         List<PostBriefInfo> posts=new ArrayList<>();
         for(CommonPost commonPost:commonPosts){
+            if(Objects.equals(commonPost.getStatus(), PostState.failed.toString())){
+                continue;
+            }
+
             PostBriefInfo postBriefInfo=new PostBriefInfo(commonPost);
             posts.add(postBriefInfo);
         }
@@ -214,6 +219,10 @@ public class CommonPostController {
         //求助
         List<HelpPost> helpPosts= helpPostService.getAll();
         for(HelpPost helpPost:helpPosts){
+            if(!Objects.equals(helpPost.getStatus(), PostState.failed.toString())){
+                continue;
+            }
+
             PostBriefInfo postBriefInfo=new PostBriefInfo(helpPost);
             posts.add(postBriefInfo);
         }
@@ -234,7 +243,7 @@ public class CommonPostController {
         }
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="机构获取所有被举报的帖子")
     @RequestMapping(value = "/reportedList",method = RequestMethod.GET)
     public Result<List<PostBriefInfo>> ReportedtList()
@@ -263,8 +272,8 @@ public class CommonPostController {
         public String postID;
     }
 
-    @NeedToken(role = Role.Institution)
-    @ApiOperation(value="机构修改对应帖子的状态")
+    //@NeedToken(role = Role.Institution)
+    @ApiOperation(value="机构修改对应帖子的状态,0:表示举报成功;1:表示举报失败")
     @RequestMapping(value = "/updateState",method = RequestMethod.POST)
     public Result<String> UpdateState(@RequestBody PostUpdateInfo postUpdateInfo)
     {

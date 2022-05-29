@@ -100,6 +100,9 @@ public class PetManageService {
         if(!Objects.equals(updateInfo.name, null)){
             pet.setName(updateInfo.name);
         }
+        if(!Objects.equals(updateInfo.price, null)){
+            pet.setPrice(updateInfo.price);
+        }
         petRepository.save(pet);
 
         return true;

@@ -94,7 +94,7 @@ public class HelpPostController {
 
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="用id删除指定帖子")
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     public Result<String> DeleteHelpPost(String id)
@@ -119,7 +119,7 @@ public class HelpPostController {
         return Result.wrapSuccessfulResult("删除成功");
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value="创建单个求助帖子")
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public Result<String> CreateHelpPost(@RequestBody HelpPostCreateInfo helpPostCreateInfo,
@@ -150,7 +150,7 @@ public class HelpPostController {
         return Result.wrapSuccessfulResult("创建成功");
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="修改单个帖子，其中id为欲修改的帖子编号")
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Result<String> UpdateCommonPost(@RequestBody HelpPostUpdateInfo helpPostUpdateInfo,

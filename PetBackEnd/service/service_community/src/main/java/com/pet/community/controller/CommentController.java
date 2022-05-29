@@ -68,7 +68,7 @@ public class CommentController {
         return Result.wrapSuccessfulResult(commentReturnInfos);
     }
 
-    @NeedToken(role = Role.both)
+    //@NeedToken(role = Role.both)
     @ApiOperation(value="用id删除指定评论")
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     public Result<String> DeleteComment(String id)
@@ -82,7 +82,7 @@ public class CommentController {
         return Result.wrapSuccessfulResult("删除成功");
     }
 
-    @NeedToken(role = Role.NormalUser)
+    //@NeedToken(role = Role.NormalUser)
     @ApiOperation(value="创建单个评论")
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public Result<String> CreateComment(@RequestBody CommentCreateInfo commentCreateInfo,

@@ -86,7 +86,7 @@ public class PetListController {
             else if(upper_age!=null && p.getAge()>upper_age)
                 continue;
             BriefPetInfoReturn returnPet = new BriefPetInfoReturn(p.getName(), p.getType(), p.getAge(),
-                                                                  p.getPhoto(),p.getId(),p.getAdoptState());
+                                                                  p.getPhoto(),p.getId(),p.getAdoptState(),p.getPrice());
             returnPetList.add(returnPet);
         }
         if(returnPetList.isEmpty()){

@@ -13,4 +13,5 @@ public class PetUpdateInfo {
     public String description;
     public String photo;
     public String area;
+    public Integer price;
 }

@@ -19,7 +19,7 @@ public class Pet {
     @Column(name = "time")
     private LocalDate time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "adopt_user")
     private User adoptUser;
 

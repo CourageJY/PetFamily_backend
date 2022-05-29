@@ -48,7 +48,7 @@ public class NoticeController {
         return Result.wrapSuccessfulResult(notices);
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="用id删除指定公告")
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     public Result<String> DeleteNotice(String id)
@@ -66,7 +66,7 @@ public class NoticeController {
         return Result.wrapSuccessfulResult("删除成功");
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="创建单个公告")
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public Result<String> CreateNotice(@RequestBody NoticeCreateInfo noticeCreateInfo)
@@ -82,7 +82,7 @@ public class NoticeController {
         return Result.wrapSuccessfulResult("创建成功");
     }
 
-    @NeedToken(role = Role.Institution)
+    //@NeedToken(role = Role.Institution)
     @ApiOperation(value="修改单个公告，其中id为欲修改的公告编号")
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Result<String> UpdateNotice(@RequestBody NoticeUpdateInfo noticeUpdateInfoInfo)

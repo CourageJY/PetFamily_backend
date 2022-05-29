@@ -31,7 +31,7 @@ public class WxPayConfig {
     private String mchSerialNo;
 
     // 商户私钥文件
-    private String privateKeyPath;
+    //private String privateKeyPath;
 
     // APIv3密钥
     private String apiV3Key;
@@ -48,17 +48,47 @@ public class WxPayConfig {
     // APIv2密钥
     private String partnerKey;
 
+    //privateKey
+    private String Key="-----BEGIN PRIVATE KEY-----\n" +
+            "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDnSAKI8sea8p+d\n" +
+            "OBVPWlZmxqJfPbdhzZxdI5Kx1j5SJNZwXWtr43/giw38pwzSlBI+bubBcYlkFTI0\n" +
+            "guigMZO/yueb1mZChaY/JG1vsT02Ubj0xkVvBwKNbYS48NEpZhK61Mia09R4n1iH\n" +
+            "1vip9kt8J6Zrx+xIqwmuCNWigyivGrvY9AdevCNlNSVdHVOZUJiJ6UGtvVmgZb0u\n" +
+            "RTwBzfkjnwTgEcsrZMmF15nFubFsyJLyF/zY4NhrISc8H/rbjgleqa8ybYL26iTS\n" +
+            "gfPCXe4U9f8fNFF2bSA06GTiB2R93q2B0zHeUYrpgF4XOGlIAqH+Ea4Vn+aOj6I0\n" +
+            "pduh03idAgMBAAECggEBAJ+4SB/hYd1szrPZhkXtwhtp87pIObtuLhzYMzdjGFjM\n" +
+            "HdctfMDeNHKSNU+U4bMPFOZO2kcfLF2Ukb5X5WSzuDBMZNRnJOmtuJiEhJsM0JQR\n" +
+            "reREhLDfK3EWAAFkNV4corSpu/vIbEP87zuoRsPBVnHgQ/rM7y1kCORKL5bycwcw\n" +
+            "5BI4xhULKAu14LEcDL3+xDJo39w+WCFlxuP+6Bs7+vIeavs+AC3TJkA4kg2nyWd3\n" +
+            "W07xPjHl64f17icqsFhuFZ+VuSf5CAgQGWDbC7BHqRkDStUDSiiUiFushouKCLdK\n" +
+            "MpA0x4ogb2ZwfZDRhZHiLNAGe4QovYCcXWBydzuT0WECgYEA828Bo1JAHE5kdnsO\n" +
+            "E9+enH/yMcOKTRnuYPiXsFXNvqofc5tZiXJmVE/+EKv7LFmtUA6qqKC7FDek8TpP\n" +
+            "SkfXmSDAgfM6AdzT0YoHH23FRVewnFMEYumtogXsXJTyI5siBSJp16s9Rn/YwESt\n" +
+            "JqjW5+9Ck1dkU+UJCZ4lOw4HeGkCgYEA8zho2BKQTh3P/xcFcoTcunVZpRayVkHM\n" +
+            "g8Ef6RGGo4vM1oshQLvXyPqCmhAIf6j71I9WPqUwjmeGyaR7Hir0dbgTCm2fJPFW\n" +
+            "lxAvgbCISxEPz10RYBcR2umMSlJLfZfhqv1CyfU4vfCTbdOimgsz2039E3oLTbzg\n" +
+            "eDe/mdzu2BUCgYEAleKjf4wFLWiXMtxRrqrhXjrpRPrBDPgKbmqh+1DZfawB8YyV\n" +
+            "dKublg4qwNkjrgsJS2G8cleE2M3qIR1l9LaHaSFhZqH79WmigkIaYJ+V9zwm4hm7\n" +
+            "eaun3TsIbXjIHmRGbiLiSIiHEgFl0/x1IHiU2fnXZCFLBNzg06ssAVCCCQECgYA1\n" +
+            "4BfxTONkOlxZgAr33BBcySPLWuS0EK0xvjTIVtaBIbWFDJqYEUPyQ/NsFwMa7B6k\n" +
+            "bf/HrqW71ZjYz7Np8k/mR5kIJVIsR71Lhw1O6AC4yBW9dDsmEtYkrLkjuWj5cAxP\n" +
+            "6PvDaqtf/4tYt5l8D+Ezwem+R7l7RcxfNNIfTf4mJQKBgE57dnRx+Ijx7VHjJvjl\n" +
+            "X2jB/VSVGpK5OADykmmZ/wvHPlQcyzd+5kAIoJhSuY48CFeI1DOogR2p01LEFQEL\n" +
+            "j4AI5FqOOQwRJvNmfoKcKwO36tSxSEGSM8POKOsa21PG/gvDpJjVFo2hn5QcMHWn\n" +
+            "z5SjsgA/1YbXejubdLxT/3pl\n" +
+            "-----END PRIVATE KEY-----";
+
     /**
      * 获取商户的私钥文件
      */
-    private PrivateKey getPrivateKey(String filename){
-
-        try {
-            return PemUtil.loadPrivateKey(new FileInputStream(filename));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("私钥文件不存在", e);
-        }
-    }
+//    private PrivateKey getPrivateKey(String filename){
+//
+//        try {
+//            return PemUtil.loadPrivateKey(new FileInputStream(filename));
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException("私钥文件不存在", e);
+//        }
+//    }
 
     /**
      * 获取签名验证器
@@ -69,7 +99,8 @@ public class WxPayConfig {
         log.info("获取签名验证器");
 
         //获取商户私钥
-        PrivateKey privateKey = getPrivateKey(privateKeyPath);
+        //PrivateKey privateKey = getPrivateKey(privateKeyPath);
+        PrivateKey privateKey = PemUtil.loadPrivateKey(Key);
 
         //私钥签名对象
         PrivateKeySigner privateKeySigner = new PrivateKeySigner(mchSerialNo, privateKey);
@@ -95,7 +126,7 @@ public class WxPayConfig {
         log.info("获取httpClient");
 
         //获取商户私钥
-        PrivateKey privateKey = getPrivateKey(privateKeyPath);
+        PrivateKey privateKey = PemUtil.loadPrivateKey(Key);
 
         WechatPayHttpClientBuilder builder = WechatPayHttpClientBuilder.create()
                 .withMerchant(mchId, mchSerialNo, privateKey)
@@ -115,7 +146,7 @@ public class WxPayConfig {
     public CloseableHttpClient getWxPayNoSignClient(){
 
         //获取商户私钥
-        PrivateKey privateKey = getPrivateKey(privateKeyPath);
+        PrivateKey privateKey = PemUtil.loadPrivateKey(Key);
 
         //用于构造HttpClient
         WechatPayHttpClientBuilder builder = WechatPayHttpClientBuilder.create()

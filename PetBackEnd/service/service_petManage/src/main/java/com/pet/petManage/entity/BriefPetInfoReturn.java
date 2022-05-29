@@ -8,8 +8,9 @@ public class BriefPetInfoReturn {
     public int age;
     public String photo;
     public String status;
+    public Integer price;
 
-    public BriefPetInfoReturn(String name, String type, int age, String photo,String petID,String status)
+    public BriefPetInfoReturn(String name, String type, int age, String photo,String petID,String status,Integer price)
     {
         this.age=age;
         this.name=name;
@@ -17,5 +18,6 @@ public class BriefPetInfoReturn {
         this.photo=photo;
         this.petID=petID;
         this.status=status;
+        this.price=price;
     }
 }

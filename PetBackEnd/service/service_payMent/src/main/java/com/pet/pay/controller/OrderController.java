@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/pay/order")
+@RequestMapping("api/wx-pay/order")
 @RefreshScope
 @Api(value="order",tags = "订单查询接口")
 public class OrderController {
@@ -43,6 +43,7 @@ public class OrderController {
         List<OrderInfo> list = orderInfoService.userListOrderByCreateTimeDesc(userId);
         return R.ok().data("list",list);
     }
+
 
     /**
      * 根据某个订单编号查询本地的订单状态

@@ -233,6 +233,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.txt</include>
+                    <include>**/*.pem</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

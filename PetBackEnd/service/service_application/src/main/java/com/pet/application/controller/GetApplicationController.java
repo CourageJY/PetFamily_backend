@@ -109,6 +109,7 @@ public class GetApplicationController {
         Json.put("certificate",findApplication.getCertificate());
         Json.put("status",findApplication.getStatus());
         Json.put("phoneNum",findApplication.getPhoneNum());
+        Json.put("area",findApplication.getArea());
 
         return Result.wrapSuccessfulResult(Json);
     }
