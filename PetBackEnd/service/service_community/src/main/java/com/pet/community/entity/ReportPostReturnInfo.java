@@ -12,6 +12,7 @@ public class ReportPostReturnInfo {
     public String userAvatar;
     public Instant time;
     public String content;
+    public String reason;
     public String reportId;
     public String postId;
 
@@ -23,6 +24,7 @@ public class ReportPostReturnInfo {
         this.userName=reportPost.getUser().getName();
         this.userAvatar=reportPost.getUser().getAvatar();
         this.time=reportPost.getTime();
+        this.reason=reportPost.getReason();
     }
 
     public ReportPostReturnInfo(){}
@@ -81,5 +83,13 @@ public class ReportPostReturnInfo {
 
     public void setTime(Instant time) {
         this.time = time;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
