@@ -44,9 +44,17 @@ public class RegisterController {
             return Result.wrapErrorResult("用户名已存在！");
         }
 
+        if(userService.getByEmail(info.email)!=null){
+            return Result.wrapErrorResult("邮箱已存在！");
+        }
+
         Date time=new Date();
         if(time.getTime()-map.get(info.email).time.getTime()>=outDate){
             return Result.wrapErrorResult("验证码过期，请重新获取");
+        }
+
+        if(!map.containsKey(info.email)){
+            return Result.wrapErrorResult("请先获取验证码！");
         }
 
         if(!Objects.equals(map.get(info.email).code, info.code)){
@@ -62,6 +70,7 @@ public class RegisterController {
         user.setPassword(Encryption.shiroEncryption(info.pwd,user.getSalt()));
         user.setCredits(100);
         user.setGender(info.gender);
+        user.setBlacklist(0);
         //存储
         userService.createOrUpdate(user);
 
@@ -87,6 +96,10 @@ public class RegisterController {
     @RequestMapping(value = "/findBackPassword", method = RequestMethod.POST)
     public Result<String> findBackPassword(@RequestBody FindPwd findPwd) {
         Date time=new Date();
+        if(!map.containsKey(findPwd.email)){
+            return Result.wrapErrorResult("请先获取验证码！");
+        }
+
         if(time.getTime()-map.get(findPwd.email).time.getTime()>=outDate){
             return Result.wrapErrorResult("验证码过期，请重新获取");
         }
@@ -96,7 +109,7 @@ public class RegisterController {
         }
 
         User user=userService.getByEmail(findPwd.email);
-        user.setPassword(findPwd.newPwd);
+        user.setPassword(Encryption.shiroEncryption(findPwd.newPwd,user.getSalt()));
 
         userService.createOrUpdate(user);
 
