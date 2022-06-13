@@ -71,7 +71,8 @@ public class CommonPostController {
         else{
             List<PostBriefInfo> resultPosts=new ArrayList<>();
             for(PostBriefInfo postBriefInfo:posts){
-                if(postBriefInfo.getContent().contains(content)){
+                if(postBriefInfo.getContent().contains(content)
+                        ||postBriefInfo.getTitle().contains(content)){
                     resultPosts.add(postBriefInfo);
                 }
             }

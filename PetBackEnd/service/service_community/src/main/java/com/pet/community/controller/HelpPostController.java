@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin("*")
 @RestController
@@ -53,13 +54,15 @@ public class HelpPostController {
 
     @ApiOperation(value="查询满足指定条件的求助帖子的列表，若content为空，则返回所有帖子")
     @RequestMapping(value = "/briefList",method = RequestMethod.GET)
-    public Result<List<PostBriefInfo>> HelpPostList(String content)
+    public Result<List<PostBriefInfo>> HelpPostList(String content,String city)
     {
         List<HelpPost> helpPosts= helpPostService.getAll();
         List<PostBriefInfo> posts=new ArrayList<>();
         for(HelpPost helpPost:helpPosts){
             PostBriefInfo postBriefInfo=new PostBriefInfo(helpPost);
-            posts.add(postBriefInfo);
+            if(city==null|| Objects.equals(postBriefInfo.city, city)){
+                posts.add(postBriefInfo);
+            }
         }
         if(content==null){
             return Result.wrapSuccessfulResult(posts);
@@ -67,7 +70,8 @@ public class HelpPostController {
         else{
             List<PostBriefInfo> resultPosts=new ArrayList<>();
             for(PostBriefInfo postBriefInfo:posts){
-                if(postBriefInfo.getContent().contains(content)){
+                if(postBriefInfo.getContent().contains(content)
+                        ||postBriefInfo.getTitle().contains((content))){
                     resultPosts.add(postBriefInfo);
                 }
             }
@@ -138,6 +142,7 @@ public class HelpPostController {
         helpPost.setTitle(helpPostCreateInfo.getTitle());
         helpPost.setLostPlace(helpPostCreateInfo.getLost_place());
         helpPost.setLostTime(helpPostCreateInfo.getLost_time());
+        helpPost.setCity(helpPostCreateInfo.getCity());
         //最多存储两张图片
         if(helpPostCreateInfo.getPhotos().length>=1){
             helpPost.setPhotoOne(helpPostCreateInfo.getPhotos()[0]);
@@ -178,6 +183,15 @@ public class HelpPostController {
         }
         if(helpPostUpdateInfo.title!=null){
             helpPost.setTitle(helpPostUpdateInfo.title);
+        }
+        if(helpPostUpdateInfo.lost_place!=null){
+            helpPost.setTitle(helpPostUpdateInfo.lost_place);
+        }
+        if(helpPostUpdateInfo.lost_time!=null){
+            helpPost.setTitle(helpPostUpdateInfo.lost_time);
+        }
+        if(helpPostUpdateInfo.city!=null){
+            helpPost.setTitle(helpPostUpdateInfo.city);
         }
         helpPostService.createOrUpdate(helpPost);
 

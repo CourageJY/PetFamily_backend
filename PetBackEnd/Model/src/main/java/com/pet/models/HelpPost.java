@@ -43,6 +43,9 @@ public class HelpPost {
     @Column(name = "thumb_up", length = 50)
     private int thumbUp;
 
+    @Column(name = "city", length = 20)
+    private String city;
+
     public String getStatus() {
         return status;
     }
@@ -125,5 +128,13 @@ public class HelpPost {
 
     public void setThumbUp(int thumbUp) {
         this.thumbUp = thumbUp;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

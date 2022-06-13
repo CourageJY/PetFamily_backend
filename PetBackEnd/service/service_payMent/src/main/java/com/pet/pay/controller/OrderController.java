@@ -10,6 +10,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -56,9 +57,10 @@ public class OrderController {
 
         String orderStatus = orderInfoService.getOrderStatus(orderNo);
         if(OrderStatus.SUCCESS.getType().equals(orderStatus)){
-            return R.ok().setMessage("支付成功"); //支付成功
+            R.ok().setMessage("支付成功");
+            return R.ok().data("message","支付成功"); //支付成功
         }
-
+        R.ok().data("message","支付中......");
         return R.ok().setCode(101).setMessage("支付中......");
     }
 }

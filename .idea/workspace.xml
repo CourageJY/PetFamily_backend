@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="5364ed32-1b4f-492c-8ba3-330954a92618" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/apiclient_key.pem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/resources/apiclient_key.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/Model/src/main/java/com/pet/models/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/Model/src/main/java/com/pet/models/Pet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_application/src/main/java/com/pet/application/controller/GetApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_application/src/main/java/com/pet/application/controller/GetApplicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/java/com/pet/pay/config/WxPayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/java/com/pet/pay/config/WxPayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PetBackEnd/Model/src/main/java/com/pet/models/HelpPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/Model/src/main/java/com/pet/models/HelpPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/controller/CommonPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/controller/CommonPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/controller/HelpPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/controller/HelpPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/entity/HelpPostCreateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/entity/HelpPostCreateInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/entity/HelpPostUpdateInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/entity/HelpPostUpdateInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/entity/PostBriefInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_community/src/main/java/com/pet/community/entity/PostBriefInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/java/com/pet/pay/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/java/com/pet/pay/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/resources/wxpay.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PetBackEnd/service/service_payMent/src/main/resources/wxpay.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +32,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/PetBackEnd" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -42,6 +48,8 @@
       <updated>1652406359316</updated>
       <workItem from="1652406361299" duration="166000" />
       <workItem from="1653797568298" duration="23000" />
+      <workItem from="1654423934423" duration="37000" />
+      <workItem from="1654977760401" duration="1219000" />
     </task>
     <servers />
   </component>

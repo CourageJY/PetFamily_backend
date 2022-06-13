@@ -11,6 +11,8 @@ public class HelpPostCreateInfo {
     public String lost_time;
     //丢失地点
     public String lost_place;
+    //所在城市
+    public String city;
 
     public String getTitle() {
         return title;
@@ -50,5 +52,13 @@ public class HelpPostCreateInfo {
 
     public void setLost_place(String lost_place) {
         this.lost_place = lost_place;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

@@ -26,6 +26,9 @@ public class PostBriefInfo implements Comparable<PostBriefInfo>{
     //类型
     public String type;
 
+    //城市
+    public String city;
+
     public PostBriefInfo(){}
 
     public PostBriefInfo(CommonPost commonPost){
@@ -79,6 +82,7 @@ public class PostBriefInfo implements Comparable<PostBriefInfo>{
         this.userId=helpPost.getUser().getId();
         this.status=helpPost.getStatus();
         this.type="求助";
+        this.city=helpPost.getCity();
     }
 
     public String getPostId() {
@@ -179,4 +183,19 @@ public class PostBriefInfo implements Comparable<PostBriefInfo>{
     }
 
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 }

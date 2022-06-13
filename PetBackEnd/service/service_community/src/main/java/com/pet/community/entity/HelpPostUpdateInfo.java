@@ -13,6 +13,8 @@ public class HelpPostUpdateInfo {
     //丢失地点
     public String lost_place;
 
+    public String city;
+
     public String getTitle() {
         return title;
     }
@@ -59,5 +61,13 @@ public class HelpPostUpdateInfo {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
     }
 }
